@@ -13,7 +13,7 @@ var generateCmd = &cobra.Command{
 	Short: "Generate Data",
 	Long:  "Generate Data from a file or stdin",
 	Run: func(cmd *cobra.Command, args []string) {
-		if err := pkg.GenerateKeys(keyPath, ""); err != nil {
+		if err := pkg.GenerateKeys(keyPath, passwordKey); err != nil {
 			fmt.Println(err)
 			os.Exit(1)
 		}

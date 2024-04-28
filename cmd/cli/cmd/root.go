@@ -1,7 +1,9 @@
 package cmd
 
 import (
+	"LucasNT/simpleEncryptFile/internal/utils"
 	"fmt"
+	"log"
 	"os"
 
 	"filippo.io/age"
@@ -9,13 +11,27 @@ import (
 )
 
 var (
-	keyPath string
 	rootCmd = &cobra.Command{
 		Use:   os.Args[0],
-		Short: "Teste",
+		Short: "Encrypt and Decrypt Data lib",
 		Long:  "Teste Longo",
+		PersistentPreRun: func(cmd *cobra.Command, args []string) {
+			if s, exists := os.LookupEnv("KEY_PASSWORD"); exists {
+				passwordKey = s
+			}
+			if isReadPassword {
+				var err error
+				passwordKey, err = utils.ReadPassword()
+				if err != nil {
+					log.Fatal(err)
+				}
+			}
+		},
 	}
-	key *age.X25519Identity
+	keyPath        string
+	key            *age.X25519Identity
+	isReadPassword bool
+	passwordKey    string = ""
 )
 
 func Execute() error {
@@ -29,7 +45,8 @@ func init() {
 		os.Exit(1)
 	}
 	path := homeDir + "/.local/encryptKey/key"
-	rootCmd.PersistentFlags().StringVar(&keyPath, "key", path, "Path to the key, default is $HOME/.local/usr/share/key")
+	rootCmd.PersistentFlags().StringVar(&keyPath, "key", path, "Path to the key")
+	rootCmd.PersistentFlags().BoolVarP(&isReadPassword, "password", "p", false, "Programn should ask for password")
 }
 
 func initialize() {

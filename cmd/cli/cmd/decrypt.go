@@ -31,7 +31,7 @@ var decryptCmd = &cobra.Command{
 		return nil
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		key, err := pkg.LoadKey(keyPath, "")
+		key, err := pkg.LoadKey(keyPath, passwordKey)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
