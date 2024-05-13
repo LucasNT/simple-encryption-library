@@ -1,4 +1,4 @@
-module LucasNT/simple-encryption-library
+module github.com/LucasNT/simple-encryption-library
 
 go 1.22.2
 

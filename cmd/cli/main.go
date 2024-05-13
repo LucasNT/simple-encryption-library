@@ -1,9 +1,9 @@
 package main
 
 import (
-	"LucasNT/simple-encryption-library/cmd/cli/cmd"
 	"log"
 
+	"github.com/LucasNT/simple-encryption-library/cmd/cli/cmd"
 	"github.com/subosito/gotenv"
 )
 

@@ -1,13 +1,13 @@
 package cmd
 
 import (
-	"LucasNT/simple-encryption-library/pkg"
 	"errors"
 	"fmt"
 	"io"
 	"log"
 	"os"
 
+	"github.com/LucasNT/simple-encryption-library/pkg"
 	"github.com/spf13/cobra"
 )
 

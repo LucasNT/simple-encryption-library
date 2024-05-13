@@ -1,12 +1,12 @@
 package cmd
 
 import (
-	"LucasNT/simple-encryption-library/internal/utils"
 	"fmt"
 	"log"
 	"os"
 
 	"filippo.io/age"
+	"github.com/LucasNT/simple-encryption-library/internal/utils"
 	"github.com/spf13/cobra"
 )
 
