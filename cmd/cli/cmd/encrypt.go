@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"LucasNT/simpleEncryptFile/pkg"
+	"LucasNT/simple-encryption-library/pkg"
 	"errors"
 	"fmt"
 	"io"

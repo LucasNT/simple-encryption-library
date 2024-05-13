@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"LucasNT/simpleEncryptFile/internal/utils"
+	"LucasNT/simple-encryption-library/internal/utils"
 	"fmt"
 	"log"
 	"os"
