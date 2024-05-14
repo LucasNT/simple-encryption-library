@@ -7,7 +7,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/LucasNT/simple-encryption-library/pkg"
+	pkg "github.com/LucasNT/simple-encryption-library/pkg"
 	"github.com/spf13/cobra"
 )
 
