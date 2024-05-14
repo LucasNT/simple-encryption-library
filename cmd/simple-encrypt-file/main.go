@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/LucasNT/simple-encryption-library/cmd/cli/cmd"
+	"github.com/LucasNT/simple-encryption-library/cmd/simple-encrypt-file/cmd"
 	"github.com/subosito/gotenv"
 )
 
