@@ -1,13 +1,14 @@
 package cmd
 
 import (
-	"fmt"
+	"errors"
 	"log"
 	"os"
 
 	"filippo.io/age"
 	"github.com/LucasNT/simple-encryption-library/internal/utils"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 var (
@@ -15,23 +16,9 @@ var (
 		Use:   os.Args[0],
 		Short: "Encrypt and Decrypt Data lib",
 		Long:  "Teste Longo",
-		PersistentPreRun: func(cmd *cobra.Command, args []string) {
-			if s, exists := os.LookupEnv("KEY_PASSWORD"); exists {
-				passwordKey = s
-			}
-			if isReadPassword {
-				var err error
-				passwordKey, err = utils.ReadPassword()
-				if err != nil {
-					log.Fatal(err)
-				}
-			}
-		},
 	}
-	keyPath        string
 	key            *age.X25519Identity
 	isReadPassword bool
-	passwordKey    string = ""
 )
 
 func Execute() error {
@@ -39,15 +26,32 @@ func Execute() error {
 }
 
 func init() {
-	homeDir, err := os.UserHomeDir()
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-	path := homeDir + "/.local/encryptKey/key"
-	rootCmd.PersistentFlags().StringVar(&keyPath, "key", path, "Path to the key")
+	cobra.OnInitialize(initialize)
+	rootCmd.PersistentFlags().String("key", "", "Path to the key")
 	rootCmd.PersistentFlags().BoolVarP(&isReadPassword, "password", "p", false, "Programn should ask for password")
+	viper.BindPFlag("KEY", rootCmd.PersistentFlags().Lookup("key"))
+	defaultKeyPath, err := utils.GetDefaultKeyPath()
+	if err != nil {
+		log.Panic(err)
+	}
+	viper.SetDefault("KEY", defaultKeyPath)
 }
 
 func initialize() {
+	viper.AddConfigPath(".")
+	viper.SetConfigType("env")
+	viper.SetConfigName(".env")
+	viper.AutomaticEnv()
+	if err := viper.ReadInConfig(); err != nil {
+		if !errors.As(err, &viper.ConfigFileNotFoundError{}) {
+			log.Panic(err)
+		}
+	}
+	if isReadPassword {
+		passwordKey, err := utils.ReadPassword()
+		if err != nil {
+			log.Fatal(err)
+		}
+		viper.Set("PASSWORD", passwordKey)
+	}
 }

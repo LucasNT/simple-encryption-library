@@ -6,6 +6,7 @@ import (
 
 	pkg "github.com/LucasNT/simple-encryption-library/pkg"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 var generateCmd = &cobra.Command{
@@ -13,6 +14,8 @@ var generateCmd = &cobra.Command{
 	Short: "Generate Data",
 	Long:  "Generate Data from a file or stdin",
 	Run: func(cmd *cobra.Command, args []string) {
+		keyPath := viper.GetString("KEY")
+		passwordKey := viper.GetString("PASSWORD")
 		if err := pkg.GenerateKeys(keyPath, passwordKey); err != nil {
 			fmt.Println(err)
 			os.Exit(1)

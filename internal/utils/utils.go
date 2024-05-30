@@ -17,3 +17,17 @@ func ReadPassword() (string, error) {
 	pass := string(bytePwd)
 	return pass, nil
 }
+
+func GetDefaultKeyPath() (string, error) {
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	path := homeDir + "/.local/share/encryptKey"
+	if err := os.MkdirAll(path, 0750); err != nil {
+		return "", fmt.Errorf("Failed to create the .localFolder %w", err)
+	}
+	return path, nil
+
+}

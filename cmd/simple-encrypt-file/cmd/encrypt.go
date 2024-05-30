@@ -9,6 +9,7 @@ import (
 
 	pkg "github.com/LucasNT/simple-encryption-library/pkg"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 var encryptCmd = &cobra.Command{
@@ -31,6 +32,7 @@ var encryptCmd = &cobra.Command{
 		return nil
 	},
 	Run: func(cmd *cobra.Command, args []string) {
+		keyPath := viper.GetString("KEY")
 		pubKey, err := pkg.LoadPubKey(keyPath + ".pub")
 		if err != nil {
 			log.Fatal(err)

@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 var testeCmd = &cobra.Command{
@@ -11,7 +12,9 @@ var testeCmd = &cobra.Command{
 	Short: "encrypt Data",
 	Long:  "encrypt Data from a file or stdin",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(passwordKey)
+		keyPath := viper.GetString("KEY")
+		passwordKey := viper.GetString("PASSWORD")
+		fmt.Println(passwordKey, keyPath)
 	},
 }
 
