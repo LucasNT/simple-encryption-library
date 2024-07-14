@@ -24,7 +24,11 @@ func GetDefaultKeyPath() (string, error) {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	path := homeDir + "/.local/share/simpleEncryptFile"
+	keyPath := os.Getenv("XDG_DATA_HOME")
+	if keyPath == "" {
+		keyPath = homeDir + "/.local/share"
+	}
+	path := keyPath + "/simpleEncryptFile"
 	if err := os.MkdirAll(path, 0750); err != nil {
 		return "", fmt.Errorf("Failed to create the .localFolder %w", err)
 	}
