@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
 	"os"
 
@@ -17,6 +18,10 @@ var generateCmd = &cobra.Command{
 		keyPath := viper.GetString("KEY")
 		passwordKey := viper.GetString("PASSWORD")
 		if err := pkg.GenerateKeys(keyPath, passwordKey); err != nil {
+			if errors.Is(err, pkg.ErrKeyAlreadyExists) {
+				fmt.Println("Key exists")
+				os.Exit(0)
+			}
 			fmt.Println(err)
 			os.Exit(1)
 		}

@@ -10,6 +10,10 @@ import (
 	"filippo.io/age"
 )
 
+var (
+	ErrKeyAlreadyExists = fmt.Errorf("Key already exists")
+)
+
 func GenerateKeys(path string, password string) error {
 	x25519, err := age.GenerateX25519Identity()
 	if err != nil {
@@ -17,6 +21,11 @@ func GenerateKeys(path string, password string) error {
 	}
 
 	var output io.WriteCloser
+
+	_, err = os.Stat(path)
+	if err == nil {
+		return ErrKeyAlreadyExists
+	}
 
 	file, err := os.Create(path)
 	if err != nil {
